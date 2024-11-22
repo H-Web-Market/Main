@@ -16,6 +16,8 @@ export const Main = () => {
         { title: "커피 머신", price: "470,000원", time: "3일 전", imageSrc: image, isLiked: false },
     ]);
 
+    const [searchTerm, setSearchTerm]=useState("");
+
     const handleAppProduct = (newProduct) => {
         setProducts((prevProducts) => [...prevProducts, newProduct]);
     };
@@ -30,14 +32,19 @@ export const Main = () => {
         );
     };
 
+    const handleSearch = (term) => {
+        setSearchTerm(term); // 검색어 상태 업데이트
+    };
+
     return (
         <Router>
             <Sidebar />
-            <Header />
+            <Header onSearch={handleSearch} />
             <Routes>
                 <Route path="/home" element={<Content 
                     products={products} 
-                    toggleLike={toggleLike} 
+                    toggleLike={toggleLike}
+                    searchTerm={searchTerm}
                 />} />
                 <Route path="/plus" element={<ProductRegist onAddProduct={handleAppProduct} />} />
                 <Route path="/product/:title" element={<DetailedInform products={products} toggleLike={toggleLike} />} />
